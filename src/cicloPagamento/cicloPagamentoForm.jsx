@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 
 import { init } from './cicloPagamentoActions'
- import LabelAndInput from '../common/form/labelAndInput'
+import LabelAndInput from '../common/form/labelAndInput'
 import ItemList from './itemList'
 import Summary from './summary'
 
@@ -13,15 +13,14 @@ class CicloPagamentoForm extends Component {
     calculateSummary() {
         const sum = (t, v) => t + v
         return {
-            sumOfCreditos: this.props.creditos.map(c => +c.valor || 0).reduce(sum),
-            sumOfDebitos: this.props.debitos.map(d => +d.valor || 0).reduce(sum)
+            sumOfCredits: this.props.creditos.map(c => +c.valor || 0).reduce(sum, 0),
+            sumOfDebts: this.props.debitos.map(d => +d.valor || 0).reduce(sum, 0)
         }
     }
 
     render() {
-        const { handleSubmit, readOnly, creditos, debitos } = this.props
-        const { sumOfCreditos, sumOfDebitos } = this.calculateSummary()
-        const total = sumOfCreditos - sumOfDebitos
+        const { handleSubmit, readOnly, credits, debts } = this.props
+        const { sumOfCredits, sumOfDebts } = this.calculateSummary()
         return (
             <form role='form' onSubmit={handleSubmit}>
                 <div className='box-body'>
@@ -31,10 +30,10 @@ class CicloPagamentoForm extends Component {
                         label='Mês' cols='12 4' placeholder='Informe o mês' />
                     <Field name='ano' component={LabelAndInput} type='number' readOnly={readOnly}
                         label='Ano' cols='12 4' placeholder='Informe o ano' />
-                    <Summary credito={sumOfCreditos} debito={sumOfDebitos} total={total}/>
+                    <Summary credito={sumOfCredits} debito={sumOfDebts} />
                     <ItemList cols='12 6' list={creditos} readOnly={readOnly}
                         field='creditos' legend='Créditos' />
-                    <ItemList cols='12 6' list={debitos} readOnly={readOnly}
+                    <ItemList cols='12 6' list={debts} readOnly={readOnly}
                         field='debitos' legend='Débitos' showStatus={true} />
                 </div>
                 <div className='box-footer'>
@@ -52,8 +51,8 @@ class CicloPagamentoForm extends Component {
 CicloPagamentoForm = reduxForm({form: 'cicloPagamentoForm', destroyOnUnmount: false})(CicloPagamentoForm)
 const selector = formValueSelector('cicloPagamentoForm')
 const mapStateToProps = state => ({
-    creditos: selector(state, 'creditos'),
-    debitos: selector(state, 'debitos')
+    credits: selector(state, 'creditos'),
+    debts: selector(state, 'debitos')
 })
 const mapDispatchToProps = dispatch => bindActionCreators({init}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(CicloPagamentoForm)

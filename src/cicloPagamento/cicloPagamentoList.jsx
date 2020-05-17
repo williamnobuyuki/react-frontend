@@ -11,16 +11,16 @@ class CicloPagamentoList extends Component {
 
     renderRows() {
         const list = this.props.list || []
-        return list.map(cp => (
-            <tr key={cp._id}>
-                <td>{cp.nome}</td>
-                <td>{cp.mes}</td>
-                <td>{cp.ano}</td>
+        return list.map(bc => (
+            <tr key={bc._id}>
+                <td>{bc.nome}</td>
+                <td>{bc.mes}</td>
+                <td>{bc.ano}</td>
                 <td>
-                    <button className='btn btn-warning' onClick={() => this.props.showUpdate(cp)}>
+                    <button className='btn btn-warning' onClick={() => this.props.showUpdate(bc)}>
                         <i className='fa fa-pencil'></i>
                     </button>
-                    <button className='btn btn-danger' onClick={() => this.props.showDelete(cp)}>
+                    <button className='btn btn-danger' onClick={() => this.props.showDelete(bc)}>
                         <i className='fa fa-trash-o'></i>
                     </button>
                 </td>
