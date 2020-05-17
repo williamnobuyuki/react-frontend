@@ -2,12 +2,12 @@ import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
 import { reset as resetForm, initialize } from 'redux-form'
 import { showTabs, selectTab } from '../common/tab/tabActions'
+import consts from '../consts'
 
-const BASE_URL = 'http://localhost:8000/api'
 const INITIAL_VALUES = {creditos: [{}], debitos: [{}]}
 
 export function getList() {
-    const request = axios.get(`${BASE_URL}/cicloPagamentos`)
+    const request = axios.get(`${consts.API_URL}/cicloPagamentos`)
     return {
         type: 'CICLO_PAGAMENTOS_FETCHED',
         payload: request
@@ -29,7 +29,7 @@ export function remove(values) {
 function submit(values, method) {
     return dispatch => {
         const id = values._id ? values._id : ''
-        axios[method](`${BASE_URL}/cicloPagamentos/${id}`, values)
+        axios[method](`${consts.API_URL}/cicloPagamentos/${id}`, values)
             .then(resp => {
                 toastr.success('Sucesso', 'Operação Realizada com sucesso.')
                 dispatch(init())
@@ -40,19 +40,19 @@ function submit(values, method) {
     }
 }
 
-export function showUpdate(billingCycle) {
+export function showUpdate(cicloPagamento) {
     return [ 
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
-        initialize('cicloPagamentoForm', billingCycle)
+        initialize('cicloPagamentoForm', cicloPagamento)
     ]
 }
 
-export function showDelete(billingCycle) {
+export function showDelete(cicloPagamento) {
     return [ 
         showTabs('tabDelete'),
         selectTab('tabDelete'),
-        initialize('cicloPagamentoForm', billingCycle)
+        initialize('cicloPagamentoForm', cicloPagamento)
     ]
 }
 
