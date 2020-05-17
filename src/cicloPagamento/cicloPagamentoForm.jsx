@@ -13,13 +13,13 @@ class CicloPagamentoForm extends Component {
     calculateSummary() {
         const sum = (t, v) => t + v
         return {
-            sumOfCredits: this.props.credito.map(c => +c.valor || 0).reduce(sum, 0),
-            sumOfDebts: this.props.debito.map(d => +d.valor || 0).reduce(sum, 0)
+            sumOfCredits: this.props.creditos.map(c => +c.valor || 0).reduce(sum, 0),
+            sumOfDebts: this.props.debitos.map(d => +d.valor || 0).reduce(sum, 0)
         }
     }
 
     render() {
-        const { handleSubmit, readOnly, credits, debts } = this.props
+        const { handleSubmit, readOnly, creditos, debitos } = this.props
         const { sumOfCredits, sumOfDebts } = this.calculateSummary()
         return (
             <form role='form' onSubmit={handleSubmit}>
