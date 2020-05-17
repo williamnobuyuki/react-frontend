@@ -51,8 +51,8 @@ class CicloPagamentoForm extends Component {
 CicloPagamentoForm = reduxForm({form: 'cicloPagamentoForm', destroyOnUnmount: false})(CicloPagamentoForm)
 const selector = formValueSelector('cicloPagamentoForm')
 const mapStateToProps = state => ({
-    credits: selector(state, 'creditos'),
-    debts: selector(state, 'debitos')
+    creditos: selector(state, 'creditos'),
+    debitos: selector(state, 'debitos')
 })
 const mapDispatchToProps = dispatch => bindActionCreators({init}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(CicloPagamentoForm)
