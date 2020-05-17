@@ -30,7 +30,7 @@ class CicloPagamentoForm extends Component {
                         label='Mês' cols='12 4' placeholder='Informe o mês' />
                     <Field name='ano' component={LabelAndInput} type='number' readOnly={readOnly}
                         label='Ano' cols='12 4' placeholder='Informe o ano' />
-                    <Summary credito={sumOfCredits} debito={sumOfDebts} />
+                    <Summary creditos={sumOfCredits} debitos={sumOfDebts} />
                     <ItemList cols='12 6' list={creditos} readOnly={readOnly}
                         field='creditos' legend='Créditos' />
                     <ItemList cols='12 6' list={debts} readOnly={readOnly}
