@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
 
 import { init } from './cicloPagamentoActions'
-import LabelAndInput from '../common/form/labelAndInput'
+ import LabelAndInput from '../common/form/labelAndInput'
 import ItemList from './itemList'
 import Summary from './summary'
 
@@ -13,14 +13,15 @@ class CicloPagamentoForm extends Component {
     calculateSummary() {
         const sum = (t, v) => t + v
         return {
-            sumOfCredits: this.props.creditos.map(c => +c.valor || 0).reduce(sum, 0),
-            sumOfDebts: this.props.debitos.map(d => +d.valor || 0).reduce(sum, 0)
+            sumOfCreditos: this.props.creditos.map(c => +c.valor || 0).reduce(sum),
+            sumOfDebitos: this.props.debitos.map(d => +d.valor || 0).reduce(sum)
         }
     }
 
     render() {
         const { handleSubmit, readOnly, creditos, debitos } = this.props
-        const { sumOfCredits, sumOfDebts } = this.calculateSummary()
+        const { sumOfCreditos, sumOfDebitos } = this.calculateSummary()
+        const total = sumOfCreditos - sumOfDebitos
         return (
             <form role='form' onSubmit={handleSubmit}>
                 <div className='box-body'>
@@ -30,10 +31,10 @@ class CicloPagamentoForm extends Component {
                         label='Mês' cols='12 4' placeholder='Informe o mês' />
                     <Field name='ano' component={LabelAndInput} type='number' readOnly={readOnly}
                         label='Ano' cols='12 4' placeholder='Informe o ano' />
-                    <Summary creditos={sumOfCredits} debitos={sumOfDebts} />
+                    <Summary credito={sumOfCreditos} debito={sumOfDebitos} total={total}/>
                     <ItemList cols='12 6' list={creditos} readOnly={readOnly}
                         field='creditos' legend='Créditos' />
-                    <ItemList cols='12 6' list={debts} readOnly={readOnly}
+                    <ItemList cols='12 6' list={debitos} readOnly={readOnly}
                         field='debitos' legend='Débitos' showStatus={true} />
                 </div>
                 <div className='box-footer'>
